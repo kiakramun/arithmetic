@@ -4,6 +4,7 @@ enum ArithmeticExpression {
   case Plus(left: ArithmeticExpression, right: ArithmeticExpression) extends ArithmeticExpression
   case Mult(left: ArithmeticExpression, right: ArithmeticExpression) extends ArithmeticExpression
   case Div(left: ArithmeticExpression, right: ArithmeticExpression) extends ArithmeticExpression
+  case Pow(base: ArithmeticExpression, exponent: ArithmeticExpression) extends ArithmeticExpression
 }
 
 object ArithmeticExpression {
@@ -13,6 +14,10 @@ object ArithmeticExpression {
     case Plus(left, right) => evaluate(left) + evaluate(right)
     case Mult(left, right) => evaluate(left) * evaluate(right)
     case Div(left, right) => evaluate(left) / evaluate(right)
+    case Pow(base, exponent) if evaluate(exponent) > 0
+      => evaluate(base) * Math.pow(evaluate(base), evaluate(exponent) - 1)
+    case Pow(base, exponent) if evaluate(exponent) < 0
+      => (1 / evaluate(base)) * Math.pow(evaluate(base), evaluate(exponent) + 1)
   }
   def pretty(expression: ArithmeticExpression): String = expression match {
     case Num(value) => value.toString
@@ -20,5 +25,8 @@ object ArithmeticExpression {
     case Plus(left, right) => s"(${pretty(left)} + ${pretty(right)})"
     case Mult(left, right) => s"(${pretty(left)} * ${pretty(right)})"
     case Div(left, right) => s"(${pretty(left)} / ${pretty(right)})"
+    case Pow(base, exponent) => s"${pretty(base)} ^ ${pretty(exponent)}"
+  
+   
   }
 }
