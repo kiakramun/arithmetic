@@ -36,6 +36,41 @@ class TestArithmeticExpression extends AnyFunSuite {
     assert(ArithmeticExpression.pretty(expr4) == "(2 / 4)")
     assert(ArithmeticExpression.pretty(expr5) == "2 ^ 4")
     assert(ArithmeticExpression.pretty(expr6) == "2 ^ -1")
-    
+  }
+
+  test("new evaluate method should return the evaluations of each expression from the given list") {
+    val expressions = List(
+    ArithmeticExpression.Num(42),
+    ArithmeticExpression.Minus(ArithmeticExpression.Num(42)),
+    ArithmeticExpression.Plus(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+    ArithmeticExpression.Mult(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+    ArithmeticExpression.Div(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+    ArithmeticExpression.Pow(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+    ArithmeticExpression.Pow(ArithmeticExpression.Num(2), ArithmeticExpression.Num(-1)))
+
+    val expectedEvaluations = List(42.0, -42.0, 6.0, 8.0, 0.5, 16.0, 0.5)
+
+    assert(ArithmeticExpression.evaluate(expressions)equals(expectedEvaluations))
+  }
+
+  test("new showResults method should format the given expressions in infix notation") {
+    val expressions = List(
+      ArithmeticExpression.Num(42),
+      ArithmeticExpression.Minus(ArithmeticExpression.Num(42)),
+      ArithmeticExpression.Plus(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+      ArithmeticExpression.Mult(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+      ArithmeticExpression.Div(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+      ArithmeticExpression.Pow(ArithmeticExpression.Num(2), ArithmeticExpression.Num(4)),
+      ArithmeticExpression.Pow(ArithmeticExpression.Num(2), ArithmeticExpression.Num(-1)))
+
+    val expectedResult =
+        "42 = 42.0\n"
+      + "(-42) = -42.0\n"
+      + "(2 + 4) = 6.0\n"
+      + "(2 * 4) = 8.0\n"
+      + "(2 / 4) = 0.5\n"
+      + "2 ^ 4 = 16.0\n"
+      + "2 ^ -1 = 0.5"
+    assert(ArithmeticExpression.showResults(expressions) == expectedResult)
   }
 }
