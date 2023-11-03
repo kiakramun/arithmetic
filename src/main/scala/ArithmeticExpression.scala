@@ -15,9 +15,9 @@ object ArithmeticExpression {
     case Mult(left, right) => evaluate(left) * evaluate(right)
     case Div(left, right) => evaluate(left) / evaluate(right)
     case Pow(base, exponent) if evaluate(exponent) > 0
-      => evaluate(base) * Math.pow(evaluate(base), evaluate(exponent) - 1)
+      => evaluate(base) * Math.pow(evaluate(base), (evaluate(exponent) - 1).toInt)
     case Pow(base, exponent) if evaluate(exponent) < 0
-      => (1 / evaluate(base)) * Math.pow(evaluate(base), evaluate(exponent) + 1)
+      => (1 / evaluate(base)) * Math.pow(evaluate(base), (evaluate(exponent) + 1).toInt)
   }
   def pretty(expression: ArithmeticExpression): String = expression match {
     case Num(value) => value.toString
