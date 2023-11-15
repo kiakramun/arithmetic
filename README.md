@@ -1,3 +1,2 @@
 # arithmetic
-This is my first Exercise from Software Engineering Course.
-I used this to learn how to use Git/GitHub
+Software Engineering Course - Exersice_01: How to use Git/GitHub
